@@ -3,12 +3,26 @@
 #      SPDX-License-Identifier:  GPL-2.0-only                                  #
 ################################################################################
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx.conf
+data:
+  nginx.conf: |
+    user nginx;
+    worker_processes auto;
+    error_log /var/log/nginx/error.log debug;
+    pid /var/run/nginx.pid;
+    events {
+      worker_connections  1024;
+    }
+    include /etc/nginx/conf.d/*.conf;  
+---
 apiVersion: apps/v1
-kind: Deployment
+kind: DaemonSet
 metadata: 
   name: nlb
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: nlb
@@ -99,13 +113,35 @@ spec:
       app: nlb
 ---
 apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql
+stringData:
+  default.conf: |
+    stream {
+      upstream upstream {
+        hash $remote_addr;
+        server ip1:port1;
+        server ip2:port2;
+        server ip3:port3;
+      }
+      server {
+        listen 8080;
+        proxy_pass upstream;
+      }
+    }
+type: Opaque
+---
+apiVersion: v1
 kind: Service
 metadata: 
   name: nlb
 spec:
   ports:
   - port: 8080
+    nodePort: 30443
+    targetPort: 8080
   selector:
     app: nlb
-  type: ClusterIP
+  type: NodePort
 ---  
