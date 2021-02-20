@@ -115,7 +115,7 @@ spec:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: mysql
+  name: default.conf
 stringData:
   default.conf: |
     stream {
