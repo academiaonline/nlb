@@ -139,7 +139,7 @@ metadata:
 spec:
   ports:
   - port: 8080
-    nodePort: 30443
+    nodePort: 30000
     targetPort: 8080
   selector:
     app: nlb
