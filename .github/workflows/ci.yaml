@@ -113,7 +113,7 @@ jobs:                                                                          #
             sleep 10                                                           ;
             docker service ls                                                  \
             |                                                                  \
-            grep "$project.*replicated.*\([0-9]\)/\1.*8080"                    \
+            grep "$project.*global.*\([0-9]\)/\1.*8080"                        \
             &&                                                                 \
             break                                                              ;
           done                                                                 ;
@@ -180,7 +180,7 @@ jobs:                                                                          #
         while true                                                             ;
           do                                                                   \
             sleep 10                                                           ;
-            kubectl get deploy | grep "$project.*\([0-9]\)/\1" && break        ;
+            kubectl get ds | grep "$project.*1.*1.*1.*1.*1" && break           ;
           done                                                                 ;
         while true                                                             ;
           do                                                                   \
