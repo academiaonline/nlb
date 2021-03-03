@@ -19,6 +19,7 @@ services:
       placement:
         constraints:
         - node.role == worker
+      resources:
         limits:
           cpus: "0.1"
           memory: 100M
