@@ -161,7 +161,7 @@ jobs:                                                                          #
         compose=etc/$mode/manifests/$project.yaml                              ;
                                                                                #
         uuid=$( md5sum $compose | cut -d\  -f1 )                               ;
-        git clone --single-branch -b v1.2                                      \
+        git clone --single-branch -b v2.2                                      \
           https://github.com/academiaonline/kubernetes $uuid                   ;
         path=$uuid/bin/cluster/ubuntu18/install-docker-kubelet.sh              ;
         source $path                                                           ;
